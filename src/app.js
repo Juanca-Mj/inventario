@@ -1,20 +1,20 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv"; 
 import categoriaRoute from "./routes/categorias.routes.js";
-import empleadoRoute from "./routes/empleados.routes.js"; 
-
-dotenv.config(); 
+import empleadoRoute from "./routes/empleados.routes.js";
+import clienteRoute from "./routes/clientes.routes.js";
+import productoRoute from "./routes/productos.routes.js"; 
 
 const app = express();
 
-app.set("port", process.env.PORT || 5000);
+app.set("port", 5000);
 
-app.use(cors()); 
-app.use(express.json()); 
+app.use(express.json());
+app.use(cors());
 
-// Rutas
 app.use("/api/categorias", categoriaRoute);
-app.use("/api/empleados", empleadoRoute); 
+app.use("/api/empleados", empleadoRoute);
+app.use("/api/clientes", clienteRoute); 
+app.use("/api/productos", productoRoute);
 
 export default app;

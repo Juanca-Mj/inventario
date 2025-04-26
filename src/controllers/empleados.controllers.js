@@ -1,11 +1,18 @@
-import pool from "../db/database.js"; 
+import getConnection from "../db/database.js";
 
-export const getEmpleados = async (req, res) => {
-  try {
-    const [rows] = await pool.query("SELECT * FROM empleados");  
-    res.json(rows);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al obtener los empleados" });
-  }
+const getEmpleados = async (req, res) => {
+    try {
+        const connection = await getConnection();
+        const empleados = await connection.query(
+            "SELECT EmpleadoID, Apellido, Nombre, Titulo, TituloCortesia, FechaNacimiento, FechaContratacion, Direccion, Ciudad, Regiones, CodigoPostal, Pais, Telefono, Extension, Foto, Notas, Jefe, RutaFoto FROM empleados"
+        );
+        res.json(empleados);  
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error en el servidor");
+    }
+};
+
+export const methodHTTP = {
+    getEmpleados,
 };

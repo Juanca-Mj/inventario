@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getEmpleados } from "../controllers/empleados.controller.js";
+import { methodHTTP as EmpleadoController } from "../controllers/empleados.controllers.js";
 
 const router = Router();
 
-router.get("/", getEmpleados);
+router.get("/", EmpleadoController.getEmpleados);
 
-export default router;
+export default router;  
