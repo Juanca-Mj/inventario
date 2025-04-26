@@ -44,23 +44,29 @@ const getCategory = async(req, res) => {
     }
 };
 
-const deleteCategory = async(req, res) => {
+const deleteCategory = async (req, res) => {
     try {
-
-        console.log("ID de categorias borrar: ",req.params);
-        const {id} = req.params
-
-        const connection = await getConnection();
-        const result = await connection.query("DELETE FROM categorias WHERE CategoriaID = ? ", id);
-        
-        res.json(result);
-
-    } catch (error){
-        console.error("ERROR 500");
-
+      const { id } = req.params;
+      console.log("ID de categorías a borrar:", id);
+  
+      const connection = await getConnection();
+      const result = await connection.query(
+        "DELETE FROM categorias WHERE CategoriaID = ?",
+        [id]
+      );
+  
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ mensaje: "Categoría no encontrada" });
+      }
+  
+      res.json({ mensaje: "Categoría eliminada correctamente" });
+  
+    } catch (error) {
+      console.error("ERROR 500", error);
+      res.status(500).json({ error: "Error al eliminar categoría" });
     }
-};
-
+  };
+  
 const updateCategorias = async (req, res) => {
     try {
         const {id} = req.params
